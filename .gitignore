@@ -1,0 +1,4 @@
+ansible.cfg*
+inventory.ini*
+!ansible.cfg.example
+!inventory.ini.example
