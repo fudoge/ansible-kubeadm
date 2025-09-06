@@ -334,6 +334,10 @@ kubeadm join <Control-Plane>:6443 --token <token> \
 ```
 
 ## 관리자 자격 증명 가져오기
+context를 내 로컬(개인 PC 및 노트북)에 가져오면, 원격으로 `kubectl`명령어를 사용할 수 있습니다.  
+context는 **클러스터 정보 및 자격 증명의 조합** 을 말합니다.  
+
+### 처음 kubectl을 사용하는 경우
 `kubeadm init`의 결과로, 아래와 같은 부분이 나왔을 겁니다.   
 즉, Control Plane의 `/etc/kubernetes/admin.conf`를 자신의 `~/.kube/config`로 가져오면 됩니다.  
 `scp`등을 이용할 수 있습니다.  
@@ -341,10 +345,28 @@ kubeadm join <Control-Plane>:6443 --token <token> \
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
 ```
 
-## 유용한 CLI들..
+### 기존 context를 추가하려는 경우
+우선, admin의 설정 파일을 로컬로 가져옵니다.
+```bash
+scp <remote-user>:<control-plane>:/etc/kubernetes/admin.conf ~/admin.conf
+```
+
+그 뒤, 기존 설정 파일과 가져온 설정파일을 병합합니다.
+```bash
+KUBECONFIG=~/.kube/config:~/admin.conf kubectl config view --flatten > ~/merged; mv ~/merged ~/.kube/config
+```
+
+컨텍스트의 이름과 클러스터의 이름을 변경할 수 있습니다.   
+여기서의 이름은 자신에게 표시될 이름을 의미합니다.  
+즉, 클러스터의 실제 이름이 변하는 것은 아닙니다. (애초에 클러스터 이름이라는 개념은 원래 없고, 클라우드 서비스에서 식별하기 위해 별도로 붙이는 것입니다)
+```bash
+kubectl config rename-context kubernetes-admin@kubernetes <새 컨텍스트 이름>
+kubectl config rename-cluster kubernetes <새 클러스터 이름>
+```
+
+## 설치할CLI들
 
 - [kubectl 설치](https://kubernetes.io/ko/docs/tasks/tools/#kubectl)
 - [kubectx 설치](https://github.com/ahmetb/kubectx)
