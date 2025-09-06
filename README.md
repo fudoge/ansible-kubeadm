@@ -1,9 +1,9 @@
 
-Table of Contents
-- [쿠버네티스 클러스터 구성하기(w. Ansible)](#쿠버네티스-클러스터-구성하기(w.-Ansible))
+# Kubernetes Cluster with Ansible
 
-# 쿠버네티스 클러스터 구성하기(w. Ansible)
-
+## Table of Contents
+- [Kubernetes Cluster with Ansible](#kubernetes-cluster-with-ansible)
+    - [Ansible 시작을 위한 기본 세팅](#ansible-시작을-위한-기본-세팅)
 본 문서는 다음의 작업에 대해 설명합니다:
 
 - **Ansible** 을 활용하여 쿠버네티스 클러스터의 필수 요소 설치를 자동화
@@ -48,7 +48,7 @@ Ansible은 대상 서버에서 작업을 취하기 위해, ssh로 접속하여 �
 
 `adduser`로 사용자를 생성합니다.
 
-`usereadd` 를 내부적으로 사용하며, 최초 비밀번호 초기화 등의 더 많은 기능들을 제공합니다.
+`useradd` 를 내부적으로 사용하며, 최초 비밀번호 초기화 등의 더 많은 기능들을 제공합니다.
 
 ```bash
 adduser ansible
@@ -65,7 +65,7 @@ ansible ALL=(ALL) NOPASSWD:ALL
 # ansible 사용자는
 # 모든 명령어를 sudo권한으로 사용가능하며
 # 모든 명령어를 비밀번호 없이 사용가능하다
-# 필요 시, 최소권한만을 줄 수도 있다.
+# 실제로는 최소권한을 주는 것이 낫다.
 ```
 
 ### ssh 키 생성
@@ -114,7 +114,7 @@ Ansible은 `/etc/ansible/ansible.cfg`의 값을 기본적으로 참조하지만,
 [defaults]
 inventory = ./inventory.ini # inventory.ini이 이번에 쓸 인벤토리 파일이다
 remote_user = ansible # ssh 유저는 ansible
-aks-pass = false # 패스워드 묻지 않음(SSH키 이용)
+aks_pass = false # 패스워드 묻지 않음(SSH키 이용)
 
 [privilege_escalation]
 become = true # 권한 상승 허용
@@ -359,12 +359,9 @@ scp <remote-user>:<control-plane>:/etc/kubernetes/admin.conf ~/admin.conf
 KUBECONFIG=~/.kube/config:~/admin.conf kubectl config view --flatten > ~/merged; mv ~/merged ~/.kube/config
 ```
 
-컨텍스트의 이름과 클러스터의 이름을 변경할 수 있습니다.   
-여기서의 이름은 자신에게 표시될 이름을 의미합니다.  
-즉, 클러스터의 실제 이름이 변하는 것은 아닙니다. (애초에 클러스터 이름이라는 개념은 원래 없고, 클라우드 서비스에서 식별하기 위해 별도로 붙이는 것입니다)
+(Optional)컨텍스트의 이름을 변경할 수 있습니다.   
 ```bash
 kubectl config rename-context kubernetes-admin@kubernetes <새 컨텍스트 이름>
-kubectl config rename-cluster kubernetes <새 클러스터 이름>
 ```
 
 ## 설치할CLI들
