@@ -83,7 +83,7 @@ ssh-keygen -N '' -f ~/.ssh/id_rsa -b 2048 -t rsa
 ### 로컬에서 각 서버로 키 배포
 
 ```bash
-ssh-copy-id ansible@<server-ip> -p <port>
+ssh-copy-id -i <key-file> ansible@<server-ip> -p <port>
 ```
 
 ### 각 서버에 hostname전파
@@ -178,6 +178,9 @@ workers
 
 ### 설치하기
 `k8s-install.yml`을 실행하여 플레이북을 실행합니다
+```bash
+ansible-playbook k8s-install.yml
+```
 
 ## Control Plane 초기화
 
