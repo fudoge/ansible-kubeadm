@@ -3,7 +3,34 @@
 
 ## Table of Contents
 - [Kubernetes Cluster with Ansible](#kubernetes-cluster-with-ansible)
-    - [Ansible 시작을 위한 기본 세팅](#ansible-시작을-위한-기본-세팅)
+    - [Ansible 시작을 위한 기본 세팅](#ansible-시작을-위한-기본-세팅)  
+        - [각 서버에 ansible 유저 생성](#각-서버에-ansible-유저-생성)
+        - [ssh 키 생성](#ssh-키-생성)
+        - [로컬에서 각 서버로 키 배포](#로컬에서-각-서버로-키-배포)
+        - [각 서버에 hostname 전파](#각-서버에-hostname-전파)
+    - [ansible.cfg 및 inventory.ini 작성](#ansiblecfg-및-inventoryini-작성)
+        - [ansible.cfg 예시](#ansiblecfg-예시)
+        - [inventory.ini 예시](#inventoryini-예시)
+    - [Ansible을 이용한 모든 노드들에 대해 필수 구성요소 설치](#ansible을-이용한-모든-노드들에-대해-필수-구성요소-설치)
+        - [준비사항](#준비사항)
+        - [순서](#순서)
+        - [설치하기](#설치하기)
+    - [Control Plane 초기화](#control-plane-초기화)
+        - [단일 Control Plane 구성](#단일-control-plane-구성)
+        - [HA구성](#HA구성)
+    - [네트워크 플러그인 설치(Cilium)](#네트워크-플러그인-설치cilium)
+        - [기존 kube-proxy제거](#기존-kube-proxy-제거)
+        - [cilium CLI를 이용한 설치](cilium-cli를-이용한-설치)
+        - [helm을 이용한 설치](helm을-이용한-설치)
+        - [설치 확인](#설정-확인)
+        - [연결 테스트하기](#연결-테스트하기)
+    - [Worker Node 조인시키기](#worker-node-조인시키기)
+    - [관리자 자격 증명 가져오기](#관리자-자격-증명-가져오기)
+        - [처음 kubectl을 사용하는 경우](#처음-kubectl을-사용하는-경우)
+        - [기존 config에 context를 추가하는 경우](#기존-config에-context를-추가하는-경우)
+    - [CLI 도구 모음](#CLI-도구-모음)
+    - [추가예정중인 정보 및 수정할 것들](#추가예정중인-정보-및-수정할-것들)
+
 본 문서는 다음의 작업에 대해 설명합니다:
 
 - **Ansible** 을 활용하여 쿠버네티스 클러스터의 필수 요소 설치를 자동화
@@ -236,7 +263,7 @@ Cilium은 L7정책, 네트워크 가시성, 서비스 메시 등의 기능들을
 kubectl delete kube-proxy -n kube-system
 ```
 
-### cilium CLI이용
+### cilium CLI를 이용한 설치
 
 Linux 기준
 
@@ -255,7 +282,7 @@ rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 cilium install --version 1.18.1
 ```
 
-### helm 이용해서 설치
+### helm을 이용한 설치
 
 cilium CLI 대신, helm으로 설치도 가능합니다
 
@@ -348,7 +375,7 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-### 기존 context를 추가하려는 경우
+### 기존 config에 context를 추가하는 경우
 우선, admin의 설정 파일을 로컬로 가져옵니다.
 ```bash
 scp <remote-user>:<control-plane>:/etc/kubernetes/admin.conf ~/admin.conf
@@ -364,7 +391,7 @@ KUBECONFIG=~/.kube/config:~/admin.conf kubectl config view --flatten > ~/merged;
 kubectl config rename-context kubernetes-admin@kubernetes <새 컨텍스트 이름>
 ```
 
-## 설치할CLI들
+## CLI 도구 모음
 
 - [kubectl 설치](https://kubernetes.io/ko/docs/tasks/tools/#kubectl)
 - [kubectx 설치](https://github.com/ahmetb/kubectx)
