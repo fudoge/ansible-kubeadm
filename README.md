@@ -197,9 +197,14 @@ workers
 3. ufw비활성화(현재 플레이북에 없음)
 4. 스왑 제거
 5. 커널 설정 변경(br_netfilter, overlay, iptables, forwarding)
+    - `br_netfilter`는 브릿지 네트워크 패킷을 `iptables`에서 볼 수 있게 해줍니다
+    - `overlay`는 컨테이너의 파일 시스템인 overlayfs를 사용할 수 있도록 해줍니다
+    - `net.ipv4.ip_forward`로 ipv4 패킷 포워딩을 활성화합니다
+    - `net.bridge-nf-call-iptables`, `net.bridge-nf-call-ip6tables`을 활성화하여 리눅스 브릿지를 통과하는 IPv4 및 IPv6 트래픽이 `iptables`의 규칙을 통과하도록 해줍니다
 6. 컨테이너 런타임 설치(containerd)
     - containerd는 Docker로부터 제공받을 수 있습니다
-7. containerd 초기 설정 + cgroup설정 + 재시동
+7. `containerd` 초기 설정 + cgroup설정(`SystemdCgroup=true`) + 재시동
+    - `systemd`와 통합하여 리소스 제한 및 격리를 관리시킵니다
 8. kubelet, kubeadm, kubectl 설치
 9. 버전 고정
 10. kubelet 실행
