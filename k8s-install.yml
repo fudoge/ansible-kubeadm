@@ -4,7 +4,7 @@
   become: true
   gather_facts: true
   vars:
-    docker_repo_codename: '{{ ansible_lsb.codename | default(''noble'') }}' # noble: 24.04
+    docker_repo_codename: "{{ ansible_lsb.codename | default('noble') }}" # noble: 24.04
     k8s_minor: v1.34
     k8s_keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     k8s_list: /etc/apt/sources.list.d/kubernetes.list
@@ -27,7 +27,7 @@
         state: absent
     - name: Ensure kernel modules are enabled (br_netfilter, overlay)
       modprobe:
-        name: '{{ item }}'
+        name: "{{ item }}"
         state: present
         persistent: present
       loop:
@@ -35,7 +35,7 @@
         - overlay
     - name: Enable iptables and forwarding via sysctl config
       sysctl:
-        name: '{{ item }}'
+        name: "{{ item }}"
         value: "1"
         reload: yes
         sysctl_file: /etc/sysctl.d/k8s.conf
@@ -89,7 +89,7 @@
     - name: Write containerd config.toml
       copy:
         dest: /etc/containerd/config.toml
-        content: '{{ containerd_config.stdout }}'
+        content: "{{ containerd_config.stdout }}"
     - name: Set SystemdCgroup=true in containerd
       replace:
         path: /etc/containerd/config.toml
@@ -107,7 +107,7 @@
         enabled: true
     - name: state the kubernetes keyring file
       stat:
-        path: '{{ k8s_keyring }}'
+        path: "{{ k8s_keyring }}"
       register: k8s_keyring_stat
     - name: Download Kubernetes apt signing key
       get_url:
@@ -128,14 +128,14 @@
       environment:
         GNUPGHOME: /etc/apt/keyrings/gnupg
       args:
-        creates: '{{ k8s_keyring }}'
+        creates: "{{ k8s_keyring }}"
     - name: Ensure permissions on Kubernetes keyring
       file:
-        path: '{{ k8s_keyring }}'
+        path: "{{ k8s_keyring }}"
         mode: "0644"
     - name: Configure Kubernetes apt repository
       copy:
-        dest: '{{ k8s_list }}'
+        dest: "{{ k8s_list }}"
         mode: "0644"
         content: |
           deb [signed-by={{ k8s_keyring }}] https://pkgs.k8s.io/core:/stable:/{{ k8s_minor }}/deb/ /

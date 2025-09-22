@@ -7,7 +7,6 @@
         - [각 서버에 ansible 유저 생성](#각-서버에-ansible-유저-생성)
         - [ssh 키 생성](#ssh-키-생성)
         - [로컬에서 각 서버로 키 배포](#로컬에서-각-서버로-키-배포)
-        - [각 서버에 hostname 전파](#각-서버에-hostname-전파)
     - [ansible.cfg 및 inventory.ini 작성](#ansiblecfg-및-inventoryini-작성)
         - [ansible.cfg 예시](#ansiblecfg-예시)
         - [inventory.ini 예시](#inventoryini-예시)
@@ -111,20 +110,7 @@ ssh-keygen -N '' -f ~/.ssh/id_rsa -b 2048 -t rsa
 ### 로컬에서 각 서버로 키 배포
 
 ```bash
-ssh-copy-id -i <key-file> ansible@<server-ip> -p <port>
-```
-
-### 각 서버에 hostname전파
-
-`/etc/hosts`를 만들어서 클러스터들이 동일한 호스트네임 테이블을 가지도록 합니다.
-```bash
-127.0.0.1 localhost
-255.255.255.255 broadcasthost
-::1 localhost
-
-# 아래처럼 클러스터 모든 구성원의 IP와 hostname을 지정해주자
-192.168.64.10 master
-192.168.64.10 worker1
+ssh-copy-id -i <key-file> -p <port> ansible@<server-ip>
 ```
 
 ## ansible.cfg 및 inventory.ini 작성
