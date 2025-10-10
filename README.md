@@ -277,13 +277,26 @@ cilium install --version 1.18.1
 
 ### helm을 이용한 설치
 
-cilium CLI 대신, helm으로 설치도 가능합니다
+cilium CLI 대신, helm으로 설치도 가능합니다.
+
 
 ```bash
 helm install cilium cilium/cilium --version 1.18.1 \
     --namespace kube-system \
     --set kubeProxyReplacement=true # kube-proxy를 대체하기
 ```
+
+`cilium/values.yaml`의 값에서 적절히 수정하거나, 그대로 사용할 수 있습니다.  
+```bash
+helm repo add cilium https://helm.cilium.io/
+
+helm repo update
+
+helm install cilium cilium/cilium \
+    -n kube-system \
+    -f cilium/values.yaml
+```
+
 
 ### 설치 확인
 
