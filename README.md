@@ -209,6 +209,8 @@ ansible-playbook k8s-install.yml
 kubeadm init --pod-network-cidr=10.43.0.0/16
 ```
 
+만약 `kube-proxy`를 처음부터 제외하고 싶다면, `--skip-phases=addon/kube-proxy` 옵션을 같이 붙여주면 됩니다.  
+
 조금만 기다리면, 아래와 같은 결과가 나옵니다:
 ```bash
 Your Kubernetes control-plane has initialized successfully!
@@ -246,7 +248,7 @@ kubeadm join 192.168.0.4:6443 --token <token> \
 
 여기서는 떠오르고 있는 CNI인 **Cilium**을 설치합니다.
 
-Cilium은 L7정책, 네트워크 가시성, 서비스 메시 등의 기능들을 강력히 제공합니다
+Cilium은 L7정책, 네트워크 가시성, 클러스터 메시 등의 기능들을 강력히 제공합니다
 
 ### 기존 kube-proxy제거
 
