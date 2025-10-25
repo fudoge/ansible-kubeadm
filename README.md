@@ -241,7 +241,7 @@ kubeadm join 192.168.0.4:6443 --token <token> \
 ## 네트워크 플러그인 설치
 쿠버네티스에는 여러 네트워크 플러그인이 존재합니다
 
-- Flanner
+- Flannel
 - Calico
 - Cilium
 - 기타(클라우트 환경 CNI 등)
