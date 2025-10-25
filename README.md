@@ -206,7 +206,7 @@ ansible-playbook k8s-install.yml
 ### 단일 Control Plane 구성
 `kubeadm init`으로 Control Plane을 초기화합니다
 ```bash
-kubeadm init --pod-network-cidr=10.43.0.0/16
+kubeadm init --pod-network-cidr=10.217.0.0/16
 ```
 
 만약 `kube-proxy`를 처음부터 제외하고 싶다면, `--skip-phases=addon/kube-proxy` 옵션을 같이 붙여주면 됩니다.  
@@ -286,7 +286,8 @@ helm install cilium cilium/cilium --version 1.18.1 \
     --set kubeProxyReplacement=true # kube-proxy를 대체하기
 ```
 
-`cilium/values.yaml`의 값에서 적절히 수정하거나, 그대로 사용할 수 있습니다.  
+`cilium/values.yaml`의 값에서 적절히 수정하거나, 그대로 사용할 수 있습니다.    
+`k8sServiceHost`는 반드시 수정해주시길 바랍니다.  
 ```bash
 helm repo add cilium https://helm.cilium.io/
 
