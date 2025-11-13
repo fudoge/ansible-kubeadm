@@ -1,8 +1,7 @@
 # values.yaml
 kubeProxyReplacement: true
-k8sServiceHost: "192.168.0.4" ## Your Control Plane IP Addr
+k8sServiceHost: 192.168.0.100 ## Your Control Plane IP Addr
 k8sServicePort: 6443
-
 # Cilium Agent metrics
 prometheus:
   enabled: true
@@ -11,21 +10,18 @@ prometheus:
     - cilium_bpf_map_pressure
     - cilium_drop_totalcilium_forward_total
     - cilium_forward_total
-
 # Operator metrics
 operator:
   replicas: 1
   prometheus:
     enabled: true
     port: 9963
-
 # Gateway API or Ingress Controller
 # Enable one of them
 gatewayAPI:
   enabled: true
 ingressController:
   enabled: false
-
 # Hubble
 hubble:
   enabled: true
@@ -38,33 +34,30 @@ hubble:
     port: 9965
     enabled:
       - dns
-      - "drop:sourceContext=pod;destinationContext=pod"
+      - drop:sourceContext=pod;destinationContext=pod
       - tcp
       - flow
       - port-distribution
       - httpV2
       - policy
-
 # bgpControlPlane
 bgpControlPlane:
   enabled: true
-
 # IPAM
 ipam:
   mode: cluster-pool # kubeadm init --pod-network-cidr 무시
   operator:
-    clusterPoolIPv4PodCIDRList: ["10.217.0.0/16"] # 클러스터 전체 CIDR. kubeadm과 ��같이 하는 것이 혼동이 적음
+    clusterPoolIPv4PodCIDRList:
+      - 10.217.0.0/16
     clusterPoolIpv4MaskSize: 24 # Node단위 서브넷 CIDR
-    clusterPoolIPv6PodCIDRList: ["fd00::/104"] # default
+    clusterPoolIPv6PodCIDRList: # 클러스터 전체 CIDR. kubeadm과 ��같이 하는 것이 혼동이 적음
+      - fd00::/104
     clusterPoolIPv6MaskSize: 120 # default
-
 # Masquerade(NAT)
-enableIpv4Masquerade: true
+enableIpv4Masquerade: true # default
 enableIpv6Masquerade: false
-
 # NetworkPolicy
 enableNetworkPolicy: true
-
 # Security
 encryption:
   enabled: true
