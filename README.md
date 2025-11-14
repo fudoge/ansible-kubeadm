@@ -85,8 +85,9 @@ adduser ansible
 또한, 완전한 자동화를 위해 패스워드 입력을 생략시킬 것입니다.
 
 ```bash
+sudo visudo -f /etc/sudoers.d/ansible.conf
 #/etc/sudoers.d/ansible에서 아래와 같이 작성
-ansible ALL=(ALL) NOPASSWD:ALL
+ansible ALL=(ALL) NOPASSWD: ALL
 
 # ansible 사용자는
 # 모든 명령어를 sudo권한으로 사용가능하며
@@ -198,7 +199,7 @@ workers
 ### 설치하기
 `k8s-install.yml`을 실행하여 플레이북을 실행합니다
 ```bash
-ansible-playbook k8s-install.yml
+ansible-playbook k8s-install.yml 
 ```
 
 ## Control Plane 초기화
