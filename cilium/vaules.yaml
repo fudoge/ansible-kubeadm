@@ -8,7 +8,7 @@ prometheus:
   port: 9966
   metrics:
     - cilium_bpf_map_pressure
-    - cilium_drop_totalcilium_forward_total
+    - cilium_drop_total
     - cilium_forward_total
 # Operator metrics
 operator:
