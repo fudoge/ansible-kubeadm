@@ -1,0 +1,18 @@
+# values.yaml
+installation:
+  enabled: true
+  kubernetesProvider: kubeadm
+  cni:
+    type: Calico
+  calicoNetwork:
+    bgp: Enabled
+    ipPools:
+      - name: default-ipv4-ippool
+        cidr: 10.0.217.0/16
+        encapsulation: VXLANCrossSubnet
+        natOutgoing: Enabled
+        nodeSelector: all()
+felixConfiguration:
+  enabled: true
+  logSeverityScreen: Info
+  healthEnabled: true
