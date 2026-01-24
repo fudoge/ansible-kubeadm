@@ -5,7 +5,7 @@
   gather_facts: true
   vars:
     docker_repo_codename: "{{ ansible_facts['lsb'].codename | default('noble') }}" # noble: 24.04
-    k8s_minor: v1.34
+    k8s_minor: v1.35
     k8s_keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     k8s_list: /etc/apt/sources.list.d/kubernetes.list
     containerd_pause_image: registry.k8s.io/pause:3.10.1
@@ -25,6 +25,7 @@
         name: none
         fstype: swap
         state: absent
+      when: ansible_facts["swaptotal_mb"] | default(0) > 0
     - name: Ensure kernel modules are enabled (br_netfilter, overlay)
       modprobe:
         name: "{{ item }}"
