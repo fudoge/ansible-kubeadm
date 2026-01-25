@@ -254,7 +254,7 @@ Cilium은 L7정책, 네트워크 가시성, 클러스터 메시 등의 기능들
 ### 기존 kube-proxy제거
 
 ```bash
-kubectl delete kube-proxy -n kube-system
+kubectl delete ds kube-proxy -n kube-system
 ```
 
 ### cilium CLI를 이용한 설치
