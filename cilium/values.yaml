@@ -43,6 +43,12 @@ hubble:
 # bgpControlPlane
 bgpControlPlane:
   enabled: true
+# Listening on the default BGP Port
+securityContext:
+  privileged: true
+  capabilities:
+    ciliumAgent:
+      - CAP_NET_BIND_SERVICE
 # IPAM
 ipam:
   mode: cluster-pool # kubeadm init --pod-network-cidr 무시
