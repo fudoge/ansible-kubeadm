@@ -220,7 +220,7 @@ kubeadm init --pod-network-cidr=10.217.0.0/16
 
 만약 `kube-proxy`를 처음부터 제외하고 싶다면, `--skip-phases=addon/kube-proxy` 옵션을 같이 붙여주면 됩니다.
 
-> [!IMPORTANT] \
+> [!IMPORTANT]
 > 내부 secret은 기본적으로 평문 저장됩니다. \
 > 암호화를 하고 싶다면, `--encryption-provider-config=<경로>` 옵션을 넣어서 암호화 설정 파일을 제공해야 합니다. \
 > [아래](#optional-기존-클러스터의-data-암호화하기) 에서 암호화 키를 생성하고 암호화 설정 파일 예시를 안내합니다. 처음부터 암호화 설정을 주입하는 경우, etcd백업 및 static pod수정은 필요없습니다.
@@ -501,7 +501,7 @@ resources:
 
 저장하면 static pod가 자동으로 재시작됩니다.
 
-> [!WARNING] \
+> [!WARNING]
 > 만약 Control Plane이 HA로 구성되어있다면, 모든 Control Plane이 같은 암호화 설정을 가져야 합니다.
 
 이제, secret을 테스트삼아 한번 만들어봅니다.
@@ -562,7 +562,7 @@ ubuntu@cp-1:~$ sudo ETCDCTL_API=3 etcdctl \
 ubuntu@cp-1:~$
 ```
 
-> [!WARNING] \
+> [!WARNING]
 > 기존의 데이터들은 암호화가 자동으로 진행되지 않습니다. \
 > 대신, `kubectl get secrets -A -o json | kubectl replace -f -`명령어로 기존 시크릿들도 암호화할 수 있습니다.
 
