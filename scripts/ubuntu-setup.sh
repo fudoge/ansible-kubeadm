@@ -8,8 +8,8 @@ set -euo pipefail
 # https://kubernetes.io/ko/docs/setup/production-environment/container-runtimes/
 # https://kubernetes.io/ko/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
-K_MINOR="v1.35"
-PAUSE="registry.k8s.io/pause:3.10.1"
+K_MINOR="v1.36"
+PAUSE="registry.k8s.io/pause:3.10.2"
 
 # Update and upgrade packages
 apt update
@@ -60,7 +60,7 @@ apt install containerd.io -y
 
 # CGroup Setup
 mkdir -p /etc/containerd
-containerd config default > /etc/containerd/config.toml
+containerd config default >/etc/containerd/config.toml
 sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
 
 ## Replace Sandbox Image
