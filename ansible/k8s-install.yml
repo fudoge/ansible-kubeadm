@@ -71,9 +71,21 @@
         creates: /etc/apt/keyrings/docker.gpg
     - name: Add Docker APT repository
       deb822_repository:
-        repo: deb [arch={{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64' )}} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ docker_repo_codename }} stable
+        name: docker
+        types:
+          - deb
+        uris:
+          - https://download.docker.com/linux/ubuntu
+        suites:
+          - "{{ docker_repo_codename }}"
+        components:
+          - stable
+        architectures:
+          - "{{ (ansible_facts['architecture'] == 'aarch64') | ternary('arm64', 'amd64') }}"
+        signed_by: /etc/apt/keyrings/docker.gpg
         state: present
-        filename: docker
+        enabled: true
+      register: docker_repo
     - name: Update apt and install containerd.io
       apt:
         name: containerd.io
