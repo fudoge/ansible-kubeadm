@@ -223,7 +223,8 @@ kubeadm init --pod-network-cidr=10.217.0.0/16
 > [!IMPORTANT]
 > 내부 secret은 기본적으로 평문 저장됩니다. \
 > 암호화를 하고 싶다면, `--encryption-provider-config=<경로>` 옵션을 넣어서 암호화 설정 파일을 제공해야 합니다. \
-> 처음부터 암호화 세팅을 하고 싶다면, 아래를 따르세요. 아래는 `secretbox`를 기반으로 암호화 설정을 처음부터 가진 채로 클러스터에 설치합니다.
+> 처음부터 암호화 세팅을 하고 싶다면, 아래를 따르세요. \
+> 아래는 `secretbox`를 기반으로 암호화 설정을 처음부터 가진 채로 클러스터에 설치합니다.
 
 암호화 키를 생성합니다.
 
@@ -248,7 +249,7 @@ resources:
       - identity: {}
 ```
 
-`kubeadm-config.yaml`에 다음과 같이 저장한다:
+`kubeadm-config.yaml`에 다음과 같이 저장합니다:
 
 ```yaml
 apiVersion: kubeadm.k8s.io/v1beta4
