@@ -28,7 +28,7 @@ hubble:
   ui:
     enabled: true
   metrics:
-    enabledOpenMetrics: true
+    enableOpenMetrics: true
     enabled:
       - dns
       - drop:sourceContext=pod;destinationContext=pod
@@ -52,12 +52,12 @@ ipam:
   operator:
     clusterPoolIPv4PodCIDRList:
       - 10.217.0.0/16
-    clusterPoolIpv4MaskSize: 24 # Node단위 서브넷 CIDR
+    clusterPoolIPv4MaskSize: 24 # Node단위 서브넷 CIDR
     clusterPoolIPv6PodCIDRList: # 클러스터 전체 CIDR. kubeadm과 ��같이 하는 것이 혼동이 적음
       - fd00::/104
     clusterPoolIPv6MaskSize: 120 # default
 # Masquerade(NAT)
-enableIpv4Masquerade: true # default
+enableIPv4Masquerade: true # default
 enableIpv6Masquerade: false
 # NetworkPolicy
 enableNetworkPolicy: true
