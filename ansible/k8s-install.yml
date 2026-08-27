@@ -5,7 +5,7 @@
   gather_facts: true
   vars:
     docker_repo_codename: "{{ ansible_facts['lsb'].codename | default('resolute') }}" # noble: 26.04
-    k8s_minor: v1.36
+    k8s_minor: v1.37
     k8s_keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     k8s_list: /etc/apt/sources.list.d/kubernetes.list
     containerd_pause_image: registry.k8s.io/pause:3.10.2

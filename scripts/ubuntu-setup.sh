@@ -8,7 +8,7 @@ set -euo pipefail
 # https://kubernetes.io/ko/docs/setup/production-environment/container-runtimes/
 # https://kubernetes.io/ko/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
-K_MINOR="v1.36"
+K_MINOR="v1.37"
 PAUSE="registry.k8s.io/pause:3.10.2"
 
 # Update and upgrade packages
