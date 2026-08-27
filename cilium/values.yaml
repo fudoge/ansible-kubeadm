@@ -58,7 +58,7 @@ ipam:
     clusterPoolIPv6MaskSize: 120 # default
 # Masquerade(NAT)
 enableIPv4Masquerade: true # default
-enableIpv6Masquerade: false
+enableIPv6Masquerade: false
 # NetworkPolicy
 enableNetworkPolicy: true
 # Security
